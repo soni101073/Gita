@@ -89,7 +89,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .ch-en{font-size:14px;color:var(--text3);font-style:italic}
 .ch-meta{font-size:11px;color:var(--text4);margin-top:7px}
 .pages-wrap{padding:12px 8px}
-.page-img{width:100%;max-width:700px;display:block;margin:0 auto 10px;border-radius:10px;box-shadow:var(--shadow);filter:var(--pf);transition:filter .3s}
+.page-img{width:100%;max-width:700px;display:block;margin:0 auto 10px;border-radius:10px;box-shadow:var(--shadow);filter:var(--pf);transition:filter .3s;image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges;-webkit-transform:translateZ(0);transform:translateZ(0)}
 .loading-msg{text-align:center;padding:60px 20px;color:var(--text4);font-size:15px}
 .zoom-hint{text-align:center;font-size:11px;color:var(--text4);padding:8px;opacity:.65}
 .app-footer{text-align:center;padding:18px 20px calc(env(safe-area-inset-bottom,0px) + 20px);font-size:11px;color:var(--text4);letter-spacing:.4px;border-top:.5px solid var(--sep);margin-top:8px}
@@ -452,10 +452,10 @@ function resetFontSize(){
 function applyFontSize(){
   var idx=FONT_STEP-FONT_MIN;
   var z=FONT_ZOOMS[Math.max(0,Math.min(idx,FONT_ZOOMS.length-1))];
-  // Scale text UI only; page images stay untouched
-  var iv=document.getElementById('idx-view');
-  if(iv) iv.style.zoom=z;
-  document.querySelectorAll('.ch-header').forEach(function(el){el.style.zoom=z;});
+  var wrap=document.getElementById('pages-wrap');
+  var ca=document.getElementById('ca');
+  if(wrap){wrap.style.zoom=z;}
+  if(ca){ca.style.overflowX=(z>1.05)?'auto':'hidden';}
 }
 function updateFontFill(){
   var total=FONT_MAX-FONT_MIN;
