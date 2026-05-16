@@ -162,8 +162,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
     <div id="idx-view">
       <div class="hero">
         <div class="hero-om">&#2384;</div>
-        <div class="hero-title">&#2349;&#2327;&#2357;&#2342;&#2381;&#2327;&#2368;&#2340;&#2366;</div>
-        <div class="hero-sub">Bhagavad Gita &mdash; Large Print Sanskrit Edition</div>
+        <div class="hero-title">Bhagavad Gita</div>
+        <div class="hero-sub">Large Print Sanskrit Edition</div>
         <div class="hero-desc">The eternal dialogue between Arjuna and Lord Krishna on the battlefield of Kurukshetra.</div>
         <div class="hero-stats">
           <div><div class="stat-n">18</div><div class="stat-l">Chapters</div></div>
@@ -419,21 +419,22 @@ function enterApp(){
   if(fs!==null){FONT_STEP=parseInt(fs);applyFontSize();}
 }
 
-function toggleFontPanel(){
-  var p=document.getElementById('font-panel');
-  p.classList.toggle('open');
+var _fontPanelOpen=false;
+function toggleFontPanel(e){
+  if(e){e.stopPropagation();}
+  _fontPanelOpen=!_fontPanelOpen;
+  document.getElementById('font-panel').classList.toggle('open',_fontPanelOpen);
   updateFontFill();
-  // close on outside tap
-  if(p.classList.contains('open')){
-    setTimeout(function(){document.addEventListener('click',closeFontPanel,{once:true,capture:true});},10);
-  }
 }
-function closeFontPanel(e){
+document.addEventListener('click',function(e){
+  if(!_fontPanelOpen)return;
   var p=document.getElementById('font-panel');
   var b=document.getElementById('font-btn');
-  if(!p.contains(e.target)&&e.target!==b){p.classList.remove('open');}
-  else{setTimeout(function(){document.addEventListener('click',closeFontPanel,{once:true,capture:true});},10);}
-}
+  if(p&&!p.contains(e.target)&&b&&!b.contains(e.target)){
+    _fontPanelOpen=false;
+    p.classList.remove('open');
+  }
+});
 function adjustFontSize(dir){
   FONT_STEP=Math.max(FONT_MIN,Math.min(FONT_MAX,FONT_STEP+dir));
   localStorage.setItem('gfs',FONT_STEP);
@@ -449,8 +450,13 @@ function resetFontSize(){
 function applyFontSize(){
   var idx=FONT_STEP-FONT_MIN;
   var z=FONT_ZOOMS[Math.max(0,Math.min(idx,FONT_ZOOMS.length-1))];
-  var ca=document.getElementById('ca');
-  if(ca){ca.style.zoom=z;ca.style.webkitTextSizeAdjust='none';}
+  var pct=Math.round(z*100)+'%';
+  document.querySelectorAll('.page-img').forEach(function(img){
+    img.style.width=pct;
+    img.style.maxWidth='none';
+  });
+  var wrap=document.getElementById('pages-wrap');
+  if(wrap){wrap.style.overflowX=z>1?'auto':'hidden';}
 }
 function updateFontFill(){
   var total=FONT_MAX-FONT_MIN;
@@ -496,6 +502,7 @@ function openChapter(idx){
         wrap.appendChild(img);
       });
       LOADED[idx]=true;
+      applyFontSize();
     },50);
   }
 
