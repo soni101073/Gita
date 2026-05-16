@@ -33,9 +33,9 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .screen.hidden{opacity:0;pointer-events:none;transform:translateY(24px)}
 
 /* Splash */
-#splash{background:linear-gradient(170deg,#0a0a12 0%,#1a0a00 50%,#0d0800 100%);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between}
-#simg{flex:1;width:auto;max-height:55vh;max-width:80%;object-fit:contain;object-position:center;display:block;margin:env(safe-area-inset-top,20px) auto 0;filter:drop-shadow(0 8px 40px rgba(255,160,0,.35));min-height:0}
-#scnt{width:100%;text-align:center;padding:12px 28px calc(env(safe-area-inset-bottom,0px) + 44px);flex-shrink:0}
+#splash{background:linear-gradient(170deg,#0a0a12 0%,#1a0a00 60%,#0d0800 100%);cursor:pointer}
+#simg{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;transform:translateX(-50%);height:56vh;width:auto;max-width:88%;object-fit:contain;filter:drop-shadow(0 8px 48px rgba(255,160,0,.4))}
+#scnt{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:0 28px calc(env(safe-area-inset-bottom,0px) + 44px)}
 .s-divider{width:60px;height:1px;background:linear-gradient(to right,transparent,rgba(255,214,10,.5),transparent);margin:0 auto 18px}
 .s-om{font-size:72px;color:#FFD60A;text-shadow:0 0 60px rgba(255,214,10,.7);margin-bottom:4px;line-height:1;animation:glow 3s ease-in-out infinite}
 @keyframes glow{0%,100%{opacity:.82;text-shadow:0 0 32px rgba(255,214,10,.45)}50%{opacity:1;text-shadow:0 0 72px rgba(255,214,10,.9)}}
@@ -133,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
     <div class="s-title">Bhagavad Gita</div>
     <div class="s-divider"></div>
     <div class="s-tag">The Song of the Lord &bull; 700 Verses &bull; 18 Chapters</div>
-    <div class="s-btn">Begin Reading</div>
+    <div class="s-btn" onclick="enterApp()">Begin Reading</div>
     <div class="s-note">Sanskrit &bull; Large Print Edition</div>
   </div>
 </div>
