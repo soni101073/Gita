@@ -34,7 +34,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
 /* Splash */
 #splash{background:linear-gradient(170deg,#0a0a12 0%,#1a0a00 60%,#0d0800 100%);cursor:pointer}
-#simg{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;transform:translateX(-50%);height:56vh;width:auto;max-width:88%;object-fit:contain;filter:drop-shadow(0 8px 48px rgba(255,160,0,.4))}
+#simg{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;transform:translateX(-50%);height:48vh;width:auto;max-width:85%;object-fit:contain;filter:drop-shadow(0 6px 36px rgba(255,160,0,.4))}#simg-fade{position:absolute;bottom:28%;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent,rgba(10,5,0,.85))}
 #scnt{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:0 28px calc(env(safe-area-inset-bottom,0px) + 44px)}
 .s-divider{width:60px;height:1px;background:linear-gradient(to right,transparent,rgba(255,214,10,.5),transparent);margin:0 auto 18px}
 .s-om{font-size:72px;color:#FFD60A;text-shadow:0 0 60px rgba(255,214,10,.7);margin-bottom:4px;line-height:1;animation:glow 3s ease-in-out infinite}
@@ -453,9 +453,11 @@ function applyFontSize(){
   var idx=FONT_STEP-FONT_MIN;
   var z=FONT_ZOOMS[Math.max(0,Math.min(idx,FONT_ZOOMS.length-1))];
   var wrap=document.getElementById('pages-wrap');
-  var ca=document.getElementById('ca');
-  if(wrap){wrap.style.zoom=z;}
-  if(ca){ca.style.overflowX=(z>1.05)?'auto':'hidden';}
+  document.querySelectorAll('.page-img').forEach(function(img){
+    if(z<=1.0){img.style.width='100%';img.style.maxWidth='700px';}
+    else{img.style.width=Math.round(z*100)+'%';img.style.maxWidth='none';}
+  });
+  if(wrap){wrap.style.overflowX=(z>1.05)?'auto':'';wrap.style.webkitOverflowScrolling='touch';}
 }
 function updateFontFill(){
   var total=FONT_MAX-FONT_MIN;
