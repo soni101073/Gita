@@ -28,7 +28,7 @@
   --shadow:0 2px 16px rgba(0,0,0,0.5);
   --pf:invert(1);
 }
-html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 .screen{position:fixed;inset:0;overflow:hidden;transition:opacity .35s,transform .35s}
 .screen.hidden{opacity:0;pointer-events:none;transform:translateY(24px)}
 
@@ -60,12 +60,12 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .content::-webkit-scrollbar{display:none}
 
 /* Index */
-.hero{background:linear-gradient(155deg,var(--bg2) 0%,var(--bg) 100%);padding:28px 22px 22px}
-.hero-om{font-size:60px;color:var(--accent);line-height:1;margin-bottom:8px}
-.hero-title{font-size:34px;font-weight:700;color:var(--text);letter-spacing:-1.2px}
+.hero{background:linear-gradient(155deg,var(--bg2) 0%,var(--bg) 100%);padding:28px 22px 22px;text-align:center}
+.hero-om{font-size:80px;color:var(--accent);line-height:1;margin-bottom:10px;font-weight:900;text-shadow:0 2px 20px rgba(255,149,0,.35);display:block}
+.hero-title{font-size:34px;font-weight:700;color:var(--text);letter-spacing:-1.2px;line-height:1.1}
 .hero-sub{font-size:14px;color:var(--text3);margin-top:5px}
-.hero-desc{font-size:13px;color:var(--text4);margin-top:12px;line-height:1.6;max-width:360px}
-.hero-stats{display:flex;gap:24px;margin-top:18px}
+.hero-desc{font-size:13px;color:var(--text4);margin-top:12px;line-height:1.6;max-width:360px;margin-left:auto;margin-right:auto}
+.hero-stats{display:flex;gap:24px;margin-top:18px;justify-content:center}
 .stat-n{font-size:24px;font-weight:700;color:var(--accent)}
 .stat-l{font-size:11px;color:var(--text4);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
 .sec-lbl{padding:16px 20px 8px;font-size:11px;font-weight:600;color:var(--text4);text-transform:uppercase;letter-spacing:1.2px}
@@ -373,7 +373,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
       </div>
     </div>
 </div>
-      <div class="app-footer">Built by <span>Sunil Soni</span> &bull; Devoted to Krishna &#127997;</div>
+      <div class="app-footer">Built by <span>Sunil Soni</span> &nbsp;&#10022;&nbsp; Devoted to Lord Krishna</div>
     </div>
 
     <div id="ch-view">
@@ -452,8 +452,11 @@ function resetFontSize(){
 function applyFontSize(){
   var idx=FONT_STEP-FONT_MIN;
   var z=FONT_ZOOMS[Math.max(0,Math.min(idx,FONT_ZOOMS.length-1))];
-  var wrap=document.getElementById('pages-wrap');
-  if(wrap){wrap.style.zoom=z;}
+  // Scale text UI only; page images stay untouched
+  var iv=document.getElementById('idx-view');
+  if(iv) iv.style.zoom=z;
+  document.querySelectorAll('.ch-header').forEach(function(el){el.style.zoom=z;});
+}
 }
 function updateFontFill(){
   var total=FONT_MAX-FONT_MIN;
